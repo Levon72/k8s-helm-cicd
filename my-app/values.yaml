@@ -20,7 +20,7 @@ nginx:
         <title>Welcome to nginx!</title>
       </head>
       <body>
-        <h1>Welcome test6 SdsfsdfSS to nginx from ${NODE_NAME}</h1>
+        <h1>Welcome GITHUB to nginx from ${NODE_NAME}</h1>
       </body>
       </html>
 
