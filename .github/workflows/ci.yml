@@ -22,7 +22,7 @@ jobs:
       - name: Setup Helm
         uses: azure/setup-helm@v3
         with:
-          version: ${{ env.HELM_VERSION }}
+          version: v3.15.3
 
       - name: Helm Package
         run: |
