@@ -7,7 +7,7 @@ on:
 
 jobs:
   lint:
-    runs-on: self-hosted  # Используем установленный раннер в вашем кластере
+    runs-on: arc-runner-set
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -15,13 +15,13 @@ jobs:
       - name: Setup Helm
         uses: azure/setup-helm@v3
         with:
-          version: ${{ env.HELM_VERSION }}  # Установка указанной версии Helm
+          version: ${{ env.HELM_VERSION }}m
 
       - name: Helm Lint
         run: helm lint ${{ env.CHART_DIR }}
 
   build:
-    runs-on: self-hosted
+    runs-on: arc-runner-set
     needs: lint
     steps:
       - name: Checkout code
@@ -45,7 +45,7 @@ jobs:
           CHART_NAME: "my-app"
 
   publish:
-    runs-on: self-hosted
+    runs-on: arc-runner-set
     needs: build
     steps:
       - name: Checkout code
@@ -66,7 +66,7 @@ jobs:
           git push origin gh-pages
 
   deploy:
-    runs-on: self-hosted
+    runs-on: arc-runner-set
     needs: publish
     steps:
       - name: Checkout code
