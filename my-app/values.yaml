@@ -1,0 +1,40 @@
+replicaCount: 3
+
+nginx:
+  image: "nginx:1.25.2"
+  config:
+    defaultConf: |
+      server {
+        listen 80;
+        server_name localhost;
+
+        location / {
+          root /usr/share/nginx/html;
+          index index.html;
+        }
+      }
+    templateHtml: |
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Welcome to nginx!</title>
+      </head>
+      <body>
+        <h1>Welcome test6 SdsfsdfSS to nginx from ${NODE_NAME}</h1>
+      </body>
+      </html>
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+ingress:
+  host: nginx2.example.com
+
+deploymentStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 1
+
