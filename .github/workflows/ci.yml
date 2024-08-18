@@ -48,10 +48,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install Git
+        run: sudo apt-get update && sudo apt-get install -y git
+
       - name: Setup Git
         run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
+          git config --global user.email "levon7299@gmail.com"
+          git config --global user.name "Stas2"
 
       - name: Publish to GitHub Pages
         run: |
