@@ -45,25 +45,20 @@ jobs:
     runs-on: arc-runner-set
     needs: build
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Install Git
-        run: sudo apt-get update && sudo apt-get install -y git
-
-      - name: Setup Git
+      - name: Configure Git
         run: |
-          git config --global user.email "levon7299@gmail.com"
-          git config --global user.name "Stas2"
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Publish to GitHub Pages
-        run: |
-          git fetch
-          git switch -C gh-pages
-          mv ${{ env.CHART_NAME }}-${{ github.ref_name }}.tgz ./charts/
-          git add ./charts/${{ env.CHART_NAME }}-${{ github.ref_name }}.tgz
-          git commit -m "Publish Helm chart"
-          git push origin gh-pages
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
   deploy:
     runs-on: arc-runner-set
